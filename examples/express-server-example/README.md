@@ -1,5 +1,5 @@
 # Server Setup Example
-
+## Example Web Application for creating Users
 ### Server Setup
 1. Make sure Node.Js is installed and added to your path. 
 2. Enter 'npm init -y' 
@@ -14,6 +14,19 @@
 ```
 
 - you will run server by entering 'npm run dev'
+- Here's what it looks like
+```bash
+npm run dev
+
+> example2@1.0.0 dev
+> nodemon server.js
+
+[nodemon] 3.1.0
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node server.js`
+```
 
 7. Install ejs 'npm i ejs'. This is a templating engine, allows the server to render html files with .ejs extension.
 8. This is what my Package.JSON file looks like
