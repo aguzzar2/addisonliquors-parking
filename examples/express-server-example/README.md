@@ -56,7 +56,7 @@ npm run dev
 ## YouTube Video:
 | Title                                            | Description                                                       |
 | ------------------------------------------------ | ----------------------------------------------------------------- |
-| [Express.JS Tutorial](https://www.youtube.com/watch?v=SccSCuHhOw0&t=394s) | YouTube Tutorial                        |
+| [Express.JS Tutorial](https://www.youtube.com/watch?v=SccSCuHhOw0&t=394s) | YouTube Tutorial                         |
 
 ## Libraries:
 | Name                                             | Description                                                       |
