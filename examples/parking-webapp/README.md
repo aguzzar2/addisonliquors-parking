@@ -4,7 +4,9 @@
 ## Google Compute Engine Free Tier
 |Title|Description|
 |---------------|-----------|
-|Compute Engine	| 1 non-preemptible e2-micro VM instance per month in one of the following US regions: Oregon: us-west1, <b>Iowa: us-central1</b>, South Carolina: us-east1, 30 GB-months standard persistent disk, 1 GB of outbound data transfer from North America to all region destinations (excluding China and Australia) per month Your Free Tier e2-micro instance limit is by time, not by instance. Each month, eligible use of all of your e2-micro instances is free until you have used a number of hours equal to the total hours in the current month. Usage calculations are combined across the supported regions. Compute Engine free tier does not charge for an external IP address. GPUs and TPUs are not included in the Free Tier offer. You are always charged for GPUs and TPUs that you add to VM instances. [GCS Free Tier](https://cloud.google.com/free/docs/free-cloud-features?utm_source=google&utm_medium=email&utm_content=OrigamiC2e&utm_campaign=OrigamiC2#free-tier-usage-limits)
+|Compute Engine	| 1 non-preemptible e2-micro VM instance per month in one of the following US regions: Oregon: us-west1, <b>Iowa: us-central1</b>, South Carolina: us-east1, 30 GB-months standard persistent disk, 1 GB of outbound data transfer from North America to all region destinations (excluding China and Australia) per month Your Free Tier e2-micro instance limit is by time, not by instance. Each month, eligible use of all of your e2-micro instances is free until you have used a number of hours equal to the total hours in the current month. Usage calculations are combined across the supported regions. Compute Engine free tier does not charge for an external IP address. GPUs and TPUs are not included in the Free Tier offer. You are always charged for GPUs and TPUs that you add to VM instances. [GCS Free Tier](https://cloud.google.com/free/docs/free-cloud-features?utm_source=google&utm_medium=email&utm_content=OrigamiC2e&utm_campaign=OrigamiC2#free-tier-usage-limits)|
+|G-Cloud CLI    |[CLI Install](https://cloud.google.com/sdk/docs/install)|
+||
 
 
 ## Dependencies:
