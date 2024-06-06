@@ -4,3 +4,5 @@ misc/
 **/node_modules/
 example1/
 .env
+.git
+PASSWORD.md

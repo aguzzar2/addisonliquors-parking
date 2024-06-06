@@ -1,0 +1,15 @@
+<h2><%= user.name  %></h2>
+<h2><%= user.email  %></h2>
+<h2><%= user.phoneNumber  %></h2>
+
+
+<a href="/users/<% user.id %>/edit">Edit</a>
+<%- include('../partials/deleteForm', { url: `/users/${user.id}` }) %>
+<% if (reservationsByUser.length > 0) { %>
+    <h2>Resevations By User</h2>
+    <% reservationsByUser.forEach(reservation => { %>
+        <a href="/reservations<%= reservation.id %>/">
+            <button type="text"><%= reservation.user.name %></button>
+        </a>
+    <% }) %>
+<% } %>

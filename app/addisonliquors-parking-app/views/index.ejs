@@ -1,0 +1,13 @@
+<h2>Recently Added Reservations</h2>
+<div>
+    <% reservations.forEach(reservation => { %>
+        <a href="/reservations/<%= reservation._id %>">
+            <div><%= reservation.user.name %></div>
+        </a>
+        <div><%= reservation.carModel %></div>
+        <div><%= reservation.carMake %></div>
+        <div><%= reservation.gameDay == null ? '' :
+            reservation.gameDay?.toISOString().split('T')[0] %> %></div>
+        <br>
+    <% }) %>
+</div>

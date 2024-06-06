@@ -1,0 +1,9 @@
+<div> User: <%= reservation.user.name %> </div>
+<div> Car Make: <%= reservation.carMake %> </div>
+<div> Car Model: <%= reservation.carModel %> </div>
+<div> Game Day: <%= reservation.gameDay == null ? '' :
+    reservation.gameDay?.toISOString().split('T')[0] %> %> </div>
+
+<a href="/reservations/<%= reservation.id %>/edit">Edit</a>
+    <%- include('../partials/deleteForm', { url: `/reservations/${reservation.id}` }) %>
+<a href="/users/<%= reservation.user.id %>">View User</a>
