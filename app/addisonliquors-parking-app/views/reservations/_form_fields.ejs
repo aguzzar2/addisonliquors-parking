@@ -14,8 +14,16 @@
 <div>
     <label>Game</label>
     <select id="game" name="game" required>
+        <% const today = new Date(); %>
         <% games.forEach(game => { %>
-            <option value="<%= game.id %>"><%= game.date.toDateString() %> vs <%= game.opponent %> at <%= game.time %></option>
+            <% if (new Date(game.date) >= today) { %>
+                <% if (new Date(game.date) >= today) { %>    
+                    <option selected value="<%= game.id %>"><%= game.date.toDateString() %> vs <%= game.opponent %> 
+                        at <%= game.time %> | Remaining Spots (<%= game.availableReservations %>)</option>
+                <% } else { %>
+                    <option value="<%= game.id %>"><%= game.date.toDateString() %> vs <%= game.opponent %> at <%= game.time %></option>
+                <% } %>
+            <% } %>
         <% }) %>   
     </select>
 </div>

@@ -6,8 +6,8 @@
 </div>
 <br>
 <% reservations.forEach(reservation => { %>
-    <div>
-        <div><%= reservation.carMake %></div>
+    <div><%= reservation.user.name %></div>
+    <div><%= reservation.carMake %></div>
     <div><%= reservation.carModel %></div>
     <div><%= reservation.game.game %></div>  
     <label>Game:</label>
