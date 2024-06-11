@@ -4,10 +4,13 @@
         <a href="/reservations/<%= reservation._id %>">
             <div><%= reservation.user.name %></div>
         </a>
-        <div><%= reservation.carModel %></div>
-        <div><%= reservation.carMake %></div>
-        <div><%= reservation.gameDay == null ? '' :
-            reservation.gameDay?.toISOString().split('T')[0] %> %></div>
+        <div> Car Make: <%= reservation.carMake %> </div>
+        <div> Car Model: <%= reservation.carModel %> </div>
+        <label>Game:</label>
+        <div> -> <%= reservation.game.date.toDateString() %></div>
+        <div> -> <%= reservation.game.time %></div>
+        <div> -> <%= reservation.game.opponent %></div>
+
         <br>
     <% }) %>
 </div>
