@@ -4,18 +4,22 @@
     <label>User</label>
     <input type="text" name="user" value="<%= searchOptions.user %>">
 </div>
-
+<br>
 <% reservations.forEach(reservation => { %>
     <div>
         <div><%= reservation.carMake %></div>
     <div><%= reservation.carModel %></div>
-    <div><%= reservation.gameDay == null ? '' :
-        reservation.gameDay?.toISOString().split('T')[0] %></div>    
+    <div><%= reservation.game.game %></div>  
+    <label>Game:</label>
+    <div> -> <%= reservation.game.date.toDateString() %></div>
+    <div> -> <%= reservation.game.time %></div>
+    <div> -> <%= reservation.game.opponent %></div>
+
     <a href="/users/<%= reservation.id %>">View</a>
     <a href="/users/<%= reservation.id %>/edit">Edit</a>
     <%- include('../partials/deleteForm',
         { url: `/reservations/${reservation.id}` }) %>  
     </div>
-    
+    <br>
         
 <% }) %>

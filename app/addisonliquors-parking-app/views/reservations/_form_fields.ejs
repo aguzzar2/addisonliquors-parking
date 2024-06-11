@@ -12,17 +12,19 @@
 </div>
 
 <div>
+    <label>Game</label>
+    <select id="game" name="game" required>
+        <% games.forEach(game => { %>
+            <option value="<%= game.id %>"><%= game.date.toDateString() %> vs <%= game.opponent %> at <%= game.time %></option>
+        <% }) %>   
+    </select>
+</div>
+
+<div>
     <label>Car Make</label>
     <input type="text" name="carMake" value="<%= reservation.carMake %>">
 </div>
 <div>
     <label>Car Model</label>
     <input type="text" name="carModel" value="<%= reservation.carModel %>">
-</div>
-
-<div>
-    <label>Game Day</label>
-    <input type="date" name="gameDay" 
-        value="<%= reservation.gameDay == null ? '' :
-        reservation.gameDay?.toISOString().split('T')[0] %>">
 </div>

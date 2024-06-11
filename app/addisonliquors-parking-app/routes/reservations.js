@@ -1,31 +1,32 @@
 const express = require('express')
 const router = express.Router()
 const Reservation = require('../models/reservation') //Access to user 
+const Game = require('../models/game') //Access to game 
 const User = require('../models/user')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'] // Fixed mime types
 
 // All Reservation Route
 router.get('/', async (req, res) => {
-    let query = Reservation.find({}).populate('user') // let b/c reassigned 'query'
+    let query = Reservation.find({}).populate('user').populate('game')
 
-    const reservation = await Reservation.findById(req.params.id).populate('user').exec()
-    res.render('reservations/show', { reservation: reservation })
-
-
-    if (req.query.user != null && req.query.user != ''){
-        query = query.regex('user', new RegExp(req.query.user, 'i'))
+    if (req.query.user != null && req.query.user !== '') {
+        const users = await User.find({ name: new RegExp(req.query.user, 'i') })
+        const userIds = users.map(user => user._id)
+        query = query.where('user').in(userIds)
     }
 
-    try{
+    try {
         const reservations = await query.exec()
         res.render('reservations/index', {
             reservations: reservations,
             searchOptions: req.query
         })
-    } catch {
+    } catch (error) {
+        console.error('Error fetching reservations:', error)
         res.redirect('/')
     }
 })
+
 
 // New Reservation Route
 router.get('/new', (req, res) => {
@@ -34,29 +35,42 @@ router.get('/new', (req, res) => {
 
 // Create Reservation Route
 router.post('/', async (req, res) => {
-    const reservation = new Reservation({
-        user: req.body.user,
-        carMake: req.body.carMake,
-        carModel: req.body.carModel,
-        gameDay: new Date(req.body.gameDay),
-        reservationDate: new Date(), // some type magic
-        parkingSpot: req.body.parkingSpot,
-        status: "confirmed"
-    })
     try {
-        const newReservation = await reservation.save()
-        res.redirect(`reservations/${newReservation.id}`)
+        const game = await Game.findById(req.body.game)
+
+        if (!game) {
+            throw new Error('Game not found')
+        }
+
+        if (game.availableReservations > 0) {
+            const reservation = new Reservation({
+                user: req.body.user,
+                carMake: req.body.carMake,
+                carModel: req.body.carModel,
+                gameDay: game.date,
+                reservationDate: new Date(),
+                parkingSpot: req.body.parkingSpot,
+                status: "confirmed",
+                game: req.body.game
+            })
+            
+            await reservation.save()
+            game.availableReservations -= 1
+            await game.save()
+            res.redirect(`/reservations/${reservation.id}`)
+        } else {
+            renderNewPage(res, new Reservation(), true, 'No reservations available for this game')
+        }
     } catch (error) {
         console.error('Error creating reservation:', error)
-        renderNewPage(res, reservation, true, error.message)
+        renderNewPage(res, new Reservation(), true, error.message)
     }
-}) // Post for Creation
-
+})
 
 // Show Reservation Route
 router.get('/:id', async (req,res) => {
     try {
-        const reservation = await Reservation.findById(req.params.id).populate('user').exec()
+        const reservation = await Reservation.findById(req.params.id).populate('user').populate('game').exec()
         res.render('reservations/show', { reservation: reservation })
     } catch {
         res.redirect('/')
@@ -80,16 +94,17 @@ router.get('/:id/edit', async (req, res) => {
 // Update Reservation Route
 router.put('/:id', async (req, res) => {
 
+
     let reservation 
     try {
         reservation = await Reservation.findById(req.params.id)
         reservation.user = req.body.user
         reservation.carMake = req.body.carMake
         reservation.carModel = req.body.carModel
-        reservation.gameDay = new Date(req.body.gameDay)
-        reservatoin.reservationDate = new Date() // some type magic
+        reservation.reservationDate = new Date() // some type magic
         reservation.parkingSpot = req.body.parkingSpot
         reservation.status = "confirmed"
+        reservation.game = req.body.game // New, removed gameDay
 
         await reservation.save()
         res.redirect(`/reservations/${reservation.id}`)
@@ -108,6 +123,11 @@ router.delete('/:id', async (req, res) => {
     let reservation 
     try {
         reservation = await Reservation.findById(req.params.id)
+        const game = await Game.findById(reservation.game)
+        if (game) {
+            game.availableReservation+=1
+            await game.save()
+        }
         await reservation.deleteOne()
         res.redirect('/')
     } catch (err) {
@@ -149,8 +169,10 @@ async function renderEditPage(res, reservation, hasError = false) {
 async function renderFormPage(res, reservation, form, hasError = false) {
     try {
         const users = await User.find({})
+        const games = await Game.find({})
         const params = {
             users: users,
+            games: games,
             reservation: reservation
         }
         if (hasError) {
