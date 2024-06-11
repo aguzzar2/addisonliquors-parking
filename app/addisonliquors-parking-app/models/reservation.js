@@ -10,10 +10,6 @@ const reservationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    gameDay: {
-        type: Date,
-        required: true
-    },
     reservationDate: {
         type: Date,
         required: true,
@@ -33,6 +29,11 @@ const reservationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
+    },
+    game: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Game',
+        required: true
     }
 })
 

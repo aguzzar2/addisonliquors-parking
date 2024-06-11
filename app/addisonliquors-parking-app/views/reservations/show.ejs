@@ -1,8 +1,11 @@
 <div> User: <%= reservation.user.name %> </div>
 <div> Car Make: <%= reservation.carMake %> </div>
 <div> Car Model: <%= reservation.carModel %> </div>
-<div> Game Day: <%= reservation.gameDay == null ? '' :
-    reservation.gameDay?.toISOString().split('T')[0] %> %> </div>
+<label>Game:</label>
+<div> -> <%= reservation.game.date.toDateString() %></div>
+<div> -> <%= reservation.game.time %></div>
+<div> -> <%= reservation.game.opponent %></div>
+
 
 <a href="/reservations/<%= reservation.id %>/edit">Edit</a>
     <%- include('../partials/deleteForm', { url: `/reservations/${reservation.id}` }) %>
